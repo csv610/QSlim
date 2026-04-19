@@ -15,3 +15,7 @@ find_package(Python3 REQUIRED)
 add_test(NAME qslim_integration_test 
          COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test_qslim_cli.py 
          --qslim $<TARGET_FILE:qslim>)
+
+add_test(NAME qslim_primitives_test 
+         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test_primitives.py 
+         --qslim $<TARGET_FILE:qslim>)
