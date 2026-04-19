@@ -219,9 +219,5 @@ inline istream& operator>>(istream& in, Vec2& v)
     return in >> v[0] >> v[1];
 }
 
-#ifdef MXGL_INCLUDED
-inline void glV(const Vec2& v) { glVertex2d(v[X], v[Y]); }
-#endif
-
 // MXVEC2_INCLUDED
 #endif

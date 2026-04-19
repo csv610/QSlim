@@ -17,24 +17,4 @@ endif()
 
 set(SRCS ${CORE_SRCS} ${MATH_SRCS} ${MODEL_SRCS} ${DATA_SRCS})
 
-if(USE_OPENGL)
-    set(GL_SRCS MxArcball.cxx MxCamera.cxx MxQVis3.cxx
-              MxStdRender.cxx MxGLDebug.cxx MxGLUtils.cxx)
-    list(APPEND SRCS ${GL_SRCS})
-endif()
-
-if(USE_XFORMS)
-    set(GUI_SRCS MxGLPane.cxx MxStdPane.cxx)
-    list(APPEND SRCS ${GUI_SRCS})
-endif()
-
 add_library(mix STATIC ${SRCS})
-
-if(USE_OPENGL)
-    target_link_libraries(mix PUBLIC OpenGL::GL OpenGL::GLU X11::X11)
-endif()
-
-if(USE_XFORMS)
-    target_include_directories(mix PRIVATE ${XFORMS_INCLUDE_DIR})
-    target_link_libraries(mix PUBLIC ${XFORMS_LIBRARY})
-endif()

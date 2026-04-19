@@ -79,28 +79,5 @@ extern MxRaster *pnm_read(istream&);
 extern bool tiff_write(const char *filename, const MxRaster&);
 extern MxRaster *tiff_read(const char *filename);
 
-////////////////////////////////////////////////////////////////////////
-//
-// OpenGL support
-//
-#ifdef MXGL_INCLUDED
-inline void glTexImage(const MxRaster& tex, GLenum target=GL_TEXTURE_2D)
-{
-    glTexImage2D(target, 0, 3, tex.width(), tex.height(),
-		 0, GL_RGB, GL_UNSIGNED_BYTE, (const unsigned char *)tex);
-}
-
-inline void gluMipmaps(const MxRaster& tex, GLenum target=GL_TEXTURE_2D)
-{
-    gluBuild2DMipmaps(target, 3, tex.width(), tex.height(),
-		      GL_RGB, GL_UNSIGNED_BYTE, (const unsigned char *)tex);
-}
-
-inline void glTexImage(const MxRaster *tex, GLenum target=GL_TEXTURE_2D)
-	{ glTexImage(*tex, target); }
-inline void gluMipmaps(const MxRaster *tex, GLenum target=GL_TEXTURE_2D)
-	{ gluMipmaps(*tex, target); }
-#endif
-
 // MXRASTER_INCLUDED
 #endif

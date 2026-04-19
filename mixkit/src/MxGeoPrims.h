@@ -236,27 +236,5 @@ inline ostream& operator<<(ostream& out, const MxTexCoord& t)
     return out << "r " << t[0] << " " << t[1];
 }
 
-#ifdef MXGL_INCLUDED
-inline void glC(const MxColor& c)
-{
-    glColor3ub(c.as.chan.r, c.as.chan.g, c.as.chan.b);
-}
-inline void glT(const MxTexCoord& t) { glTexCoord2fv(t); }
-inline void glV(const MxVertex& v) { glVertex3fv(v); }
-inline void glN(const MxNormal& n) { 
-    //
-    // !!WARNING!! glNormal3sv doesn't work for some reason, and neither
-    // glNormal3s.  Oddly, glNormal3i correctly.  Is this some sort of GL bug
-    // or am I doing something wrong??
-    //
-    glNormal3i(n.raw(0), n.raw(1), n.raw(2));
-}
-
-inline void glC(const MxColor *c)    { glC(*c); }
-inline void glT(const MxTexCoord *t) { glT(*t); }
-inline void glV(const MxVertex *v)   { glV(*v); }
-inline void glN(const MxNormal *n)   { glN(*n); }
-#endif
-
 // MXGEOPRIMS_INCLUDED
 #endif

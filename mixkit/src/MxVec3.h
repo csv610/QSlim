@@ -248,12 +248,6 @@ inline istream& operator>>(istream& in, Vec3& v)
     return in >> v[0] >> v[1] >> v[2];
 }
 
-#ifdef MXGL_INCLUDED
-inline void glV(const Vec3& v) { glVertex3d(v[X], v[Y], v[Z]); }
-inline void glN(const Vec3& v) { glNormal3d(v[X], v[Y], v[Z]); }
-inline void glC(const Vec3& v) { glColor3d(v[X], v[Y], v[Z]); }
-#endif
-
 
 // MXVEC3_INCLUDED
 #endif
