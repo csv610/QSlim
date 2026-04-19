@@ -1,59 +1,104 @@
 # QSlim 2.0 (Modernized)
 
-A modernized version of the classic **QSlim** surface simplification software.
+[![C++ Standard](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+[![Build Status](https://img.shields.io/badge/Build-CMake-success.svg)](#building)
 
-This repository provides a clean, headless, and modern C++17 implementation of the Quadric Error Metric (QEM) simplification algorithm. All legacy GUI/OpenGL dependencies have been removed, making it ideal for command-line processing, server-side automation, and integration into modern 3D pipelines.
+A modernized, high-performance, and headless implementation of the classic **QSlim** surface simplification software.
 
-## Credits & History
+This version is a "clean-room" modernization of the original 1999 codebase. It strips away legacy 90s-era GUI dependencies (OpenGL/X11) to provide a pure mathematical engine for mesh decimation, updated for modern C++ standards and build pipelines.
 
-**Original Author:** Michael Garland ([garland@uiuc.edu](mailto:garland@uiuc.edu))  
-**Collaborator:** Paul Heckbert  
-**Original Release:** 1998-1999 (University of Illinois)
+---
 
-The underlying Quadric Error Metric (QEM) developed by Garland and Heckbert remains the industry standard for geometric simplification and is used today in tools like Unity, Unreal Engine, and Blender.
+## 🚀 Key Modernization Features
 
-## Modernization Features (2026)
+*   **Zero Dependencies:** Completely removed OpenGL, X11, and XForms. It can now be built on any headless server or container without a GPU or display driver.
+*   **C++17 Standard:** Refactored for modern compilers (Clang, GCC, MSVC). Fixed dozens of legacy "writable string" warnings and removed deprecated keywords like `register`.
+*   **Modern Build System:** Replaced fragile legacy Makefiles with a robust **CMake** configuration.
+*   **Multi-Format Support:** Added native support for modern 3D formats:
+    *   **OBJ** (Alias Wavefront)
+    *   **OFF** (Object File Format)
+    *   **STL** (Binary Stereolithography)
+    *   **SMF** (Original Michael Garland format)
+*   **100% Warning-Free:** The codebase now compiles with zero warnings under strict modern standards.
+*   **Automated Verification:** Integrated `ctest` suite ensuring mathematical correctness across all file formats.
 
-This version includes several significant updates to the original 1999 codebase:
+---
 
-*   **Modern Build System:** Full **CMake** integration (replaces legacy Makefiles).
-*   **C++17 Standard:** Code updated for compatibility with modern compilers (Clang 15+, GCC 11+, MSVC 2019+).
-*   **Expanded Format Support:** Native support for **OBJ**, **OFF**, and **STL (Binary)**, in addition to the original SMF format.
-*   **Zero Dependencies:** Completely stripped of OpenGL, X11, and XForms. It is now a pure mathematical/CLI toolkit.
-*   **Automated Testing:** Integrated `ctest` suite covering core math, data structures, and CLI integration.
-*   **Improved Safety:** Replaced unsafe legacy C functions (e.g., `vsprintf`) with safer modern alternatives.
+## 🧠 Background: Why QSlim?
 
-## Building
+Developed by **Michael Garland** and **Paul Heckbert** at Carnegie Mellon University, the Quadric Error Metric (QEM) algorithm is the "gold standard" for mesh simplification. It provides the optimal balance between geometric fidelity and computational speed. 
 
+While the original software was a research prototype, this modernized version makes it production-ready for:
+*   **Game Development:** Automatic LOD (Level of Detail) generation.
+*   **Web 3D:** Compressing massive models for browser-based rendering.
+*   **3D Printing:** Decimating high-poly scans for slicer compatibility.
+
+---
+
+## 🛠 Building
+
+### Prerequisites
+*   CMake 3.10 or higher
+*   A C++17 compatible compiler (GCC 9+, Clang 10+, MSVC 2019+)
+
+### Compilation
 ```bash
+# Clone the repository
+git clone https://github.com/csv610/QSlim.git
+cd QSlim
+
+# Build
 mkdir build && cd build
 cmake ..
-make
-```
+make -j$(sysctl -n hw.ncpu)
 
-To run the tests:
-```bash
+# Run Tests
 ctest
 ```
 
-## Usage
+---
 
-The primary tool is `qslim`, located in `build/tools/qslim/qslim`.
+## 💻 Usage
 
+The core tool is the `qslim` command-line utility.
+
+### Basic Simplification
+Simplify a model to a target number of faces (e.g., 5,000 faces):
 ```bash
-qslim -t <target_face_count> -o output.obj input.obj
+./tools/qslim/qslim -t 5000 -o output.obj input.obj
 ```
 
-### Supported Formats
-- **Input:** .obj, .off, .stl (binary), .smf
-- **Output:** .smf (default), .iv, .vrml
+### Key Options
+| Flag | Description |
+| :--- | :--- |
+| `-t <n>` | Set the target number of faces. |
+| `-o <file>` | Specify output filename (supports .obj, .smf). |
+| `-O <0-3>` | Optimal placement policy (3 = Default Optimal). |
+| `-W <0-2>` | Quadric weighting (1 = Area Weighted [Default]). |
+| `-B <weight>` | Use boundary preservation planes (important for open meshes). |
+| `-q` | Quiet mode (minimal console output). |
 
-## Filters & Tools
-The `tools/filters` directory contains several utility programs:
-- `smfclean`: Remove degenerate faces and isolated vertices.
-- `smfcat`: Combine multiple SMF files.
-- `smfmeasure`: Compute geometric differences between models.
-- `smf2ply` / `smf2c`: Convert models to other formats.
+---
 
-## License
-This software is distributed under the terms of the **GNU General Public License (GPL)**. See `COPYING.txt` and `GPL.txt` for details.
+## 📦 Included Tools
+
+Beyond `qslim`, the `tools/filters` directory provides several "Lego-block" utilities for mesh processing:
+*   **smfclean:** Strips degenerate triangles and isolated vertices.
+*   **smfmeasure:** Calculates the geometric error between two models.
+*   **smfcat:** Concatenates multiple mesh files into one.
+*   **smf2ply / smf2c:** Converters for PLY and C-header data.
+
+---
+
+## 📜 Credits & License
+
+**Original Research & Implementation:**  
+Michael Garland and Paul Heckbert.  
+*Surface Simplification Using Quadric Error Metrics*, SIGGRAPH 97.
+
+**Modernization Authors:**  
+Chaman Singh Verma and Contributors.
+
+**License:**  
+This software is distributed under the **GNU General Public License (GPL) v2**. See `COPYING.txt` for the full license text.
