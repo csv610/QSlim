@@ -9,7 +9,11 @@ set(MODEL_SRCS MxBlockModel.cxx MxStdModel.cxx MxSMF.cxx MxQMetric3.cxx
              MxEdgeFilter.cxx MxQMetric2.cxx MxLineModel.cxx
              MxOBJ.cxx MxOFF.cxx MxSTL.cxx)
 
-set(DATA_SRCS MxHeap.cxx MxRaster.cxx MxRaster-tiff.cxx)
+set(DATA_SRCS MxHeap.cxx MxRaster.cxx)
+
+if(USE_LIBTIFF)
+    list(APPEND DATA_SRCS MxRaster-tiff.cxx)
+endif()
 
 set(SRCS ${CORE_SRCS} ${MATH_SRCS} ${MODEL_SRCS} ${DATA_SRCS})
 

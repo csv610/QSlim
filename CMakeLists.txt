@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Options
-option(USE_OPENGL "Build with OpenGL support" ON)
+option(USE_OPENGL "Build with OpenGL support" OFF)
 option(USE_XFORMS "Build with XForms support" OFF)
 option(USE_LIBTIFF "Build with LibTIFF support" OFF)
 option(USE_LIBPNG "Build with LibPNG support" OFF)
