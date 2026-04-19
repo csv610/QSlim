@@ -13,7 +13,14 @@ This version is a "clean-room" modernization of the original 1999 codebase. It s
 ## 🚀 Key Modernization Features
 
 *   **Zero Dependencies:** Completely removed OpenGL, X11, and XForms. It can now be built on any headless server or container without a GPU or display driver.
-*   **C++17 Standard:** Refactored for modern compilers (Clang, GCC, MSVC). Fixed dozens of legacy "writable string" warnings and removed deprecated keywords like `register`.
+*   **C++17 Standard:** Refactored for modern compilers. This includes:
+    *   **Smart Pointers (RAII):** Replaced manual memory management with `std::unique_ptr` to prevent leaks.
+    *   **Type Safety:** Systematically replaced legacy `NULL` with `nullptr` and added `override` keywords.
+    *   **Modern Iterators:** Added support for range-based `for` loops (`for (auto& x : block)`) to core data structures.
+    *   **Move Semantics:** Implemented move constructors and assignment for efficient data transfer.
+*   **New API Capabilities:**
+    *   `get_removal_order()`: Returns the exact sequence of vertices removed during decimation.
+    *   `get_protected_vertices()`: Automatically identifies critical boundary and non-manifold vertices that should be preserved.
 *   **Modern Build System:** Replaced fragile legacy Makefiles with a robust **CMake** configuration.
 *   **Multi-Format Support:** Added native support for modern 3D formats:
     *   **OBJ** (Alias Wavefront)
