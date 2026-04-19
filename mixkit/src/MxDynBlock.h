@@ -40,6 +40,15 @@ public:
 	    return length() - 1;
 	}
 
+    uint add(T&& t)
+	{
+	    this->data.push_back(std::move(t));
+	    return length() - 1;
+	}
+
+    void push_back(const T& t) { this->data.push_back(t); }
+    void push_back(T&& t) { this->data.push_back(std::move(t)); }
+
     void reset() { this->data.clear(); }
     T& drop() { T& val = this->data.back(); this->data.pop_back(); return val; }
     void drop(uint d) 
@@ -60,7 +69,7 @@ public:
     void remove(uint i)
 	{ 
             AssertBound(i<length()); 
-            this->data[i] = this->data.back(); 
+            this->data[i] = std::move(this->data.back()); 
             this->data.pop_back(); 
         }
     void remove_inorder(uint i)

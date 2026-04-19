@@ -84,6 +84,12 @@ public:
     unsigned int normal_count() const { return (normals?normals->length():0); }
     uint texcoord_count() const { return (tcoords?tcoords->length():0); }
 
+    const MxDynBlock<MxVertex>& all_vertices() const { return vertices; }
+    const MxDynBlock<MxFace>& all_faces() const { return faces; }
+    const MxDynBlock<MxNormal>& all_normals() const { assert(normals); return *normals; }
+    const MxDynBlock<MxColor>& all_colors() const { assert(colors); return *colors; }
+    const MxDynBlock<MxTexCoord>& all_tcoords() const { assert(tcoords); return *tcoords; }
+
     MxVertexID add_vertex(float, float, float);
     MxFaceID add_face(uint, uint, uint, bool will_link=true);
     unsigned int add_color(float, float, float);

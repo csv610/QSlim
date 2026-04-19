@@ -34,9 +34,9 @@ public:
 
 public:
     MxQSlim(MxStdModel&);
-    virtual ~MxQSlim() { }
+    virtual ~MxQSlim() override { }
 
-    virtual void initialize();
+    void initialize() override;
 
     const MxQuadric3& vertex_quadric(MxVertexID v) { return quadrics(v); }
 };
@@ -79,11 +79,11 @@ protected:
 
 public:
     MxEdgeQSlim(MxStdModel&);
-    virtual ~MxEdgeQSlim();
+    virtual ~MxEdgeQSlim() override;
 
-    void initialize();
+    void initialize() override;
     void initialize(const MxEdge *edges, uint count);
-    bool decimate(uint target);
+    bool decimate(uint target) override;
     std::vector<MxVertexID> get_removal_order(uint target);
 
     void apply_contraction(const MxPairContraction& conx);
@@ -115,8 +115,8 @@ protected:
 public:
     MxFaceQSlim(MxStdModel&);
 
-    void initialize();
-    bool decimate(uint target);
+    void initialize() override;
+    bool decimate(uint target) override;
 };
 
 // MXQSLIM_INCLUDED

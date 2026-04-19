@@ -47,6 +47,12 @@ public:
     operator       T*()       { return data.data(); }
     uint length() const { return (uint)data.size(); }
 
+    // Iterator support for range-based for loops
+    auto begin() { return data.begin(); }
+    auto end() { return data.end(); }
+    auto begin() const { return data.begin(); }
+    auto end() const { return data.end(); }
+
     // Primitive methods for altering the data block
     //
     void resize(uint n) { resize_block(n); }

@@ -17,6 +17,7 @@
 
 #include "MxBlockModel.h"
 #include <vector>
+#include <memory>
 
 typedef MxSizedDynBlock<unsigned int, 6> MxFaceList;
 typedef MxSizedDynBlock<unsigned int, 6> MxVertexList;
@@ -69,7 +70,7 @@ private:
 
     MxDynBlock<vertex_data> v_data;
     MxDynBlock<face_data> f_data;
-    MxDynBlock<MxFaceList *> face_links;
+    MxDynBlock<std::unique_ptr<MxFaceList>> face_links;
 
 protected:
 
@@ -88,19 +89,20 @@ protected:
     void fmark(MxFaceID i, unsigned char m) { f_data(i).mark = m; }
 
 protected:
-    MxVertexID alloc_vertex(float, float, float);
-    void free_vertex(MxVertexID);
-    void free_face(MxFaceID);
-    MxFaceID alloc_face(MxVertexID, MxVertexID, MxVertexID);
-    void init_face(MxFaceID);
+    MxVertexID alloc_vertex(float, float, float) override;
+    void free_vertex(MxVertexID) override;
+    void free_face(MxFaceID) override;
+    MxFaceID alloc_face(MxVertexID, MxVertexID, MxVertexID) override;
+    void init_face(MxFaceID) override;
 
 public:
     MxStdModel(unsigned int nvert, unsigned int nface)
 	: MxBlockModel(nvert,nface),
 	  v_data(nvert), f_data(nface), face_links(nvert)
 	{
+            for(unsigned int i=0; i<nvert; i++) face_links(i) = std::make_unique<MxFaceList>();
 	}
-    virtual ~MxStdModel();
+    virtual ~MxStdModel() override;
 
     ////////////////////////////////////////////////////////////////////////
     //  Tagging and marking

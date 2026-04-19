@@ -34,7 +34,6 @@ MxPairContraction& MxPairContraction::operator=(const MxPairContraction& c)
 
 MxStdModel::~MxStdModel()
 {
-    for(uint i=0; i<face_links.length(); i++)  delete face_links[i];
 }
 
 MxVertexID MxStdModel::alloc_vertex(float x, float y, float z)
@@ -45,7 +44,7 @@ MxVertexID MxStdModel::alloc_vertex(float x, float y, float z)
     v_data(id).user_tag = 0x0;
     vertex_mark_valid(id);
 
-    unsigned int l = face_links.add(new MxFaceList);
+    uint l = face_links.add(std::make_unique<MxFaceList>());
     SanityCheck( l == id );
     SanityCheck( neighbors(id).length() == 0 );
 
@@ -54,7 +53,6 @@ MxVertexID MxStdModel::alloc_vertex(float x, float y, float z)
 
 void MxStdModel::free_vertex(MxVertexID v)
 {
-    delete face_links[v];
     face_links.remove(v);
     v_data.remove(v);
 }
@@ -406,9 +404,7 @@ void MxStdModel::compact_vertices()
 		// old vertices, we actually have to swap values instead
 		// of the simple copying in the block above.
 		//
-		MxFaceList *t = face_links(newID);
-		face_links(newID) = face_links(oldID);
-		face_links(oldID) = t;
+		std::swap(face_links(newID), face_links(oldID));
 
 		vertex_mark_valid(newID);
 

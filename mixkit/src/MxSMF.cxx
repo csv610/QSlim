@@ -380,23 +380,23 @@ void MxSMFWriter::write(ostream& out, MxStdModel& m)
     if( m.normal_binding() != MX_UNBOUND )
     {
 	out << "bind n " << m.binding_name(m.normal_binding()) << endl;
-	for(i=0; i<m.normal_count(); i++)
-	    out << m.normal(i) << endl;
+	for(const auto& n : m.all_normals())
+	    out << n << endl;
     }
 
     if( m.color_binding() != MX_UNBOUND )
     {
 	out << "bind c " << m.binding_name(m.color_binding()) << endl;
-	for(i=0; i<m.color_count(); i++)
-	    out << m.color(i) << endl;
+	for(const auto& c : m.all_colors())
+	    out << c << endl;
     }
 
     if( m.texcoord_binding() != MX_UNBOUND )
     {
 	out << "tex " << m.texmap_name() << endl;
 	out << "bind r " << m.binding_name(m.texcoord_binding()) << endl;
-	for(i=0; i<m.texcoord_count(); i++)
-	    out << m.texcoord(i) << endl;
+	for(const auto& t : m.all_tcoords())
+	    out << t << endl;
     }
 
     out << "end" << endl;
