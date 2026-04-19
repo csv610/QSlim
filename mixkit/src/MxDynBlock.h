@@ -8,10 +8,7 @@
 
   MxDynBlocks are blocks that automatically grow to fit the data added
   to them.
-
-  Copyright (C) 1998 Michael Garland.  See "COPYING.txt" for details.
-  
-  $Id: MxDynBlock.h,v 1.12 1998/10/26 21:08:49 garland Exp $
+  Modernized to use std::vector.
 
  ************************************************************************/
 
@@ -20,40 +17,40 @@
 template<class T>
 class MxDynBlock : public MxBlock<T>
 {
-private:
-    uint fill;
-
 public:
-    MxDynBlock() { this->init_block(8); fill=0; }
-    MxDynBlock(uint n) { this->init_block(n); fill=0; }
+    MxDynBlock() { }
+    MxDynBlock(uint n) : MxBlock<T>(n) { this->data.clear(); this->data.reserve(n); }
 
-    T&       operator()(uint i)       { AssertBound(i<fill); return this->ref(i); }
-    const T& operator()(uint i) const { AssertBound(i<fill); return this->ref(i); }
+    T&       operator()(uint i)       { AssertBound(i<length()); return this->data[i]; }
+    const T& operator()(uint i) const { AssertBound(i<length()); return this->data[i]; }
 
-    uint length() const { return fill; }
-    uint total_space() const { return MxBlock<T>::length(); }
-    T& last() { AssertBound(fill>0); return this->raw(fill-1); }
-    const T& last() const { AssertBound(fill>0); return this->raw(fill-1); }
+    uint length() const { return (uint)this->data.size(); }
+    uint total_space() const { return (uint)this->data.capacity(); }
+    T& last() { AssertBound(length()>0); return this->data.back(); }
+    const T& last() const { AssertBound(length()>0); return this->data.back(); }
 
     uint add()
 	{
-	    if( length()==total_space() )  this->resize(total_space() * 2);
-	    return fill++;
+	    this->data.push_back(T());
+	    return length() - 1;
 	}
     uint add(const T& t)
 	{
-	    uint i=add();
-	    this->raw(i) = t;
-	    return i;
+	    this->data.push_back(t);
+	    return length() - 1;
 	}
 
-    void reset() { fill = 0; }
-    T& drop() { return this->raw(--fill); }
-    void drop(uint d) { fill -= d; }
+    void reset() { this->data.clear(); }
+    T& drop() { T& val = this->data.back(); this->data.pop_back(); return val; }
+    void drop(uint d) 
+        { 
+            for(uint i=0; i<d && !this->data.empty(); i++) 
+                this->data.pop_back(); 
+        }
     bool find(const T& t, uint *index=NULL)
 	{
-	    for(uint i=0; i<fill; i++)
-		if( this->raw(i) == t )
+	    for(uint i=0; i<length(); i++)
+		if( this->data[i] == t )
 		{
 		    if( index ) *index = i;
 		    return true;
@@ -61,9 +58,16 @@ public:
 	    return false;
 	}
     void remove(uint i)
-	{ AssertBound(i<fill); fill--; this->raw(i) = this->raw(fill); }
+	{ 
+            AssertBound(i<length()); 
+            this->data[i] = this->data.back(); 
+            this->data.pop_back(); 
+        }
     void remove_inorder(uint i)
-	{ memmove(&this->raw(i), &this->raw(i+1), (--fill - i)*sizeof(T)); }
+	{ 
+            AssertBound(i<length());
+            this->data.erase(this->data.begin() + i);
+        }
 };
 
 template<class T, int T_SIZE>
