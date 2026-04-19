@@ -111,8 +111,9 @@ def main():
     # Define test cases: (filename, creator_func, target_faces)
     tests = [
         ("test_cube.off", lambda f: create_cube(f), 4),
-        ("test_plane.off", lambda f: create_plane(f, res=20), 50),
-        ("test_sphere.off", lambda f: create_sphere(f, rings=30, sectors=30), 100),
+        ("test_plane.off", lambda f: create_plane(f, res=50), 100),
+        ("test_sphere.off", lambda f: create_sphere(f, rings=50, sectors=50), 200),
+        ("stress_sphere.off", lambda f: create_sphere(f, rings=500, sectors=500), 1000),
     ]
 
     success = True
