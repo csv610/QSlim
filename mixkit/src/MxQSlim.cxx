@@ -602,6 +602,39 @@ bool MxEdgeQSlim::decimate(uint target)
     return true;
 }
 
+std::vector<MxVertexID> MxEdgeQSlim::get_removal_order(uint target)
+{
+    std::vector<MxVertexID> removed_vertices;
+    MxPairContraction local_conx;
+
+    while( valid_faces > target )
+    {
+	MxQSlimEdge *info = (MxQSlimEdge *)heap.extract();
+	if( !info ) { break; }
+
+	MxVertexID v1=info->v1, v2=info->v2;
+
+	if( m->vertex_is_valid(v1) && m->vertex_is_valid(v2) )
+	{
+	    MxPairContraction& conx = local_conx;
+
+	    m->compute_contraction(v1, v2, &conx, info->vnew);
+
+	    if( will_join_only && conx.dead_faces.length()>0 ) continue;
+
+	    if( contraction_callback )
+		(*contraction_callback)(conx, -info->heap_key());
+	    
+	    removed_vertices.push_back(v2); // Record the vertex being removed
+	    apply_contraction(conx);
+	}
+
+	delete info;
+    }
+
+    return removed_vertices;
+}
+
 
 
 void MxFaceQSlim::compute_face_info(MxFaceID f)

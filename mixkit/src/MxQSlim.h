@@ -16,6 +16,7 @@
 
 #include "MxStdSlim.h"
 #include "MxQMetric3.h"
+#include <vector>
 
 class MxQSlim : public MxStdSlim
 {
@@ -83,6 +84,7 @@ public:
     void initialize();
     void initialize(const MxEdge *edges, uint count);
     bool decimate(uint target);
+    std::vector<MxVertexID> get_removal_order(uint target);
 
     void apply_contraction(const MxPairContraction& conx);
     void apply_expansion(const MxPairContraction& conx);

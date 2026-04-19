@@ -10,6 +10,11 @@ add_executable(test_data test_data.cxx)
 target_link_libraries(test_data mix)
 add_test(NAME data_test COMMAND test_data)
 
+# Removal order test
+add_executable(test_removal_order test_removal_order.cxx)
+target_link_libraries(test_removal_order mix)
+add_test(NAME removal_order_test COMMAND test_removal_order)
+
 # Integration test
 find_package(Python3 REQUIRED)
 add_test(NAME qslim_integration_test 
