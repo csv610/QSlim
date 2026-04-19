@@ -16,6 +16,7 @@
 
 
 #include "MxBlockModel.h"
+#include <vector>
 
 typedef MxSizedDynBlock<unsigned int, 6> MxFaceList;
 typedef MxSizedDynBlock<unsigned int, 6> MxVertexList;
@@ -164,6 +165,7 @@ public:
 
     void compute_vertex_normal(MxVertexID v, float *);
     void synthesize_normals();
+    std::vector<MxVertexID> get_protected_vertices();
 
     ////////////////////////////////////////////////////////////////////////
     // Primitive transformation operations

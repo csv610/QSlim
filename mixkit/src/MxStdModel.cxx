@@ -223,6 +223,50 @@ void MxStdModel::synthesize_normals()
 		     "MxStdModel::synthesize_normals");
 }
 
+std::vector<MxVertexID> MxStdModel::get_protected_vertices()
+{
+    std::vector<MxVertexID> protected_verts;
+    MxVertexList star;
+    MxFaceList faces;
+
+    for (MxVertexID i = 0; i < vert_count(); i++)
+    {
+        if (!vertex_is_valid(i)) continue;
+
+        star.reset();
+        collect_vertex_star(i, star);
+
+        bool is_protected = false;
+        for (uint j = 0; j < star.length(); j++)
+        {
+            faces.reset();
+            collect_edge_neighbors(i, star(j), faces);
+            
+            // If an edge has only 1 face neighbor, it is a boundary edge.
+            // Vertices on boundary edges are "protected" to maintain mesh silhouette.
+            if (faces.length() == 1)
+            {
+                is_protected = true;
+                break;
+            }
+            
+            // Non-manifold edges (faces > 2) are also protected
+            if (faces.length() > 2)
+            {
+                is_protected = true;
+                break;
+            }
+        }
+
+        if (is_protected)
+        {
+            protected_verts.push_back(i);
+        }
+    }
+
+    return protected_verts;
+}
+
 
 
 void MxStdModel::remap_vertex(unsigned int from, unsigned int to)
