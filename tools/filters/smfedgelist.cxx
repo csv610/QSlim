@@ -33,10 +33,17 @@ static bool will_output_model = true;
 static int nontree_target = 0;
 
 static const char *options = "aet:";
+
 static const char *usage_string =
-"-a		Generate all edges in the model\n"
-"-e		Output edges only (exclude the model\n"
-"-t n		Output n% of non-tree edges\n"
+"smfedgelist - Generate edge lists from models\n"
+"\n"
+"Usage: smfedgelist [options] [input files]\n"
+"\n"
+"Options:\n"
+"  -a        Generate all edges in the model\n"
+"  -e        Output edges only (exclude the model)\n"
+"  -t <n>    Output n% of non-tree edges\n"
+"  -h        Display this help message\n"
 "\n";
 
 class edge_info: public MxEdge, public MxHeapable
@@ -115,6 +122,7 @@ void process_options(int opt, char *optarg)
 
 int main(int argc, char *argv[])
 {
+    set_usage_string(usage_string);
     MxStdModel *m = process_cmdline(argc, argv, options, process_options);
 
     if( !m )  return 0;

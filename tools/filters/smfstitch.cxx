@@ -25,9 +25,16 @@ static uint stitch_count = 0;
 
 static double threshold = -1;
 
-static const char *options = "xt:ch";
+static const char *options = "xt:c";
+
 static const char *usage_string =
-"-t <n>		Set stitching threshold [default=0.75 * min. edge length]\n"
+"smfstitch - Stitch together coincident vertices\n"
+"\n"
+"Usage: smfstitch [options] [input files]\n"
+"\n"
+"Options:\n"
+"  -t <n>    Set stitching threshold (default: 0.75 * min edge length)\n"
+"  -h        Display this help message\n"
 "\n";
 
 static
@@ -36,13 +43,6 @@ void process_options(int opt, char *optarg)
     switch( opt )
     {
     case 't':  threshold = atof(optarg); break;
-    case 'h':
-	cerr << endl;
-	cerr << "smfstitch  Version 1.0 "
-	     << "[Built " << __DATE__ << "]." << endl
-	     << "Copyright (C) 1998 Michael Garland, All Rights Reserved."
-	     << endl;
-	cerr << endl << usage_string << endl; exit(0); break;
     }
 }
 
@@ -101,6 +101,7 @@ void exhaustive_search(MxStdModel *m)
 
 int main(int argc, char *argv[])
 {
+    set_usage_string(usage_string);
     MxStdModel *m = process_cmdline(argc, argv, options, process_options);
     if( !m ) return 0;
 

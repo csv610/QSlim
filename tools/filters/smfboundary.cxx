@@ -15,10 +15,7 @@
 
 static double threshold = 0;
 
-static const char *options = "t:h";
-static const char *usage_string =
-"-t <n>		Set proximity threshold\n"
-"\n";
+static const char *options = "t:";
 
 static
 void process_options(int opt, char *optarg)
@@ -26,9 +23,6 @@ void process_options(int opt, char *optarg)
     switch( opt )
     {
     case 't':  threshold = atof(optarg); break;
-    case 'h':
-	cerr << endl << usage_string << endl;
-	break;
     }
 }
 
@@ -76,8 +70,19 @@ void output_boundary_verts(MxStdModel *m, ostream& out)
     }
 }
 
+static const char *usage_string =
+"smfboundary - Extract boundary edges from mesh\n"
+"\n"
+"Usage: smfboundary [options] [input files]\n"
+"\n"
+"Options:\n"
+"  -t <n>    Set proximity threshold\n"
+"  -h        Display this help message\n"
+"\n";
+
 int main(int argc, char *argv[])
 {
+    set_usage_string(usage_string);
     MxStdModel *m = process_cmdline(argc, argv, options, process_options);
     if( !m ) return 0;
 

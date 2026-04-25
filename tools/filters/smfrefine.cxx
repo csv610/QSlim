@@ -26,9 +26,16 @@ static float noise_scale;
 static float diameter;
 
 static const char *options = "t:n:";
+
 static const char *usage_string =
-"-t <n>		Set the maximum allowable edge length.\n"
-"-n <L>		Set the noise level to L% of the model diameter [default=0].\n"
+"smfrefine - Refine model by iteratively splitting edges\n"
+"\n"
+"Usage: smfrefine [options] [input files]\n"
+"\n"
+"Options:\n"
+"  -t <n>    Set the maximum allowable edge length\n"
+"  -n <L>    Set the noise level to L% of the model diameter [default: 0]\n"
+"  -h        Display this help message\n"
 "\n";
 
 static
@@ -68,6 +75,7 @@ void RefineFilter::filter_target_edge(MxRankedEdge *edge)
 
 int main(int argc, char *argv[])
 {
+    set_usage_string(usage_string);
     MxStdModel *m = process_cmdline(argc, argv, options, process_options);
     if( !m ) return 0;
 

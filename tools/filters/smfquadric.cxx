@@ -26,14 +26,21 @@ static float k1 = 1;
 static float k2 = 1;
 static float quadric_extent = 1.0;
 
-static const char *options = "x:y:t:r:n:fh";
+static const char *options = "x:y:t:r:n:f";
+
 static const char *usage_string =
-"-x <k1>	Set the curvature along the X axis.\n"
-"-y <k2>	Set the curvature along the Y axis.\n"
-"-t <r>		Set the radial quadric_extent of the surface.\n"
-"-r <n>		Set the number of rings generated.\n"
-"-n <n>		Set the number of slices generated.\n"
-"-f		Flip the normal orientation.\n"
+"smfquadric - Generate quadric surfaces\n"
+"\n"
+"Usage: smfquadric [options]\n"
+"\n"
+"Options:\n"
+"  -x <k1>   Set the curvature along the X axis\n"
+"  -y <k2>   Set the curvature along the Y axis\n"
+"  -t <r>    Set the radial extent of the surface\n"
+"  -r <n>    Set the number of rings generated\n"
+"  -n <n>    Set the number of slices generated\n"
+"  -f        Flip the normal orientation\n"
+"  -h        Display this help message\n"
 "\n";
 
 static
@@ -47,8 +54,6 @@ void process_options(int opt, char *optarg)
     case 'r':  ring_count = atoi(optarg); break;
     case 'n':  N = atoi(optarg); break;
     case 'f':  focus_out = !focus_out; break;
-    case 'h':
-	cerr << endl << usage_string << endl; exit(0); break;
     }
 }
 
@@ -132,6 +137,7 @@ MxStdModel *generate_quadric()
 
 int main(int argc, char *argv[])
 {
+    set_usage_string(usage_string);
     process_cmdline_only(argc, argv, options, process_options);
 
     MxStdModel *m = generate_quadric();

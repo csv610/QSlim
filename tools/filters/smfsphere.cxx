@@ -25,12 +25,7 @@ static float max_sqrlen = HUGE;
 static uint edge_target = 0;
 static bool will_skew = false;
 
-static const char *options = "t:l:kh";
-static const char *usage_string =
-"-l <n>		Set the maximum allowable edge length.\n"
-"-t <n>		Set the desired edge target.\n"
-"-k		Skew the triangle density towards the poles.\n"
-"\n";
+static const char *options = "t:l:k";
 
 static
 void process_options(int opt, char *optarg)
@@ -40,8 +35,6 @@ void process_options(int opt, char *optarg)
     case 'l':  max_sqrlen = atof(optarg); max_sqrlen*=max_sqrlen; break;
     case 't':  edge_target = atoi(optarg); break;
     case 'k':  will_skew = true; break;
-    case 'h':
-	cerr << endl << usage_string << endl; exit(0); break;    
     }
 }
 
@@ -96,8 +89,21 @@ MxStdModel *create_sphere_base()
     return m;
 }
 
+static const char *usage_string =
+"smfsphere - Generate subdivision sphere\n"
+"\n"
+"Usage: smfsphere [options]\n"
+"\n"
+"Options:\n"
+"  -l <n>    Set the maximum allowable edge length\n"
+"  -t <n>   Set the desired edge target\n"
+"  -k       Skew the triangle density towards the poles\n"
+"  -h       Display this help message\n"
+"\n";
+
 int main(int argc, char *argv[])
 {
+    set_usage_string(usage_string);
     process_cmdline_only(argc, argv, options, process_options);
     MxStdModel *m = create_sphere_base();
 

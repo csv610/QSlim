@@ -24,9 +24,16 @@ static double err_max = 0;
 
 static uint sample_count = 0;
 
-static const char *options = "s:h";
+static const char *options = "s:";
+
 static const char *usage_string =
-"-s <n>		Make <n> additional random samples on each face.\n"
+"smferror - Measure error between two models\n"
+"\n"
+"Usage: smferror [options] <model1> <model2>\n"
+"\n"
+"Options:\n"
+"  -s <n>    Make <n> additional random samples on each face\n"
+"  -h        Display this help message\n"
 "\n";
 
 static
@@ -35,8 +42,6 @@ void process_options(int opt, char *optarg)
     switch( opt )
     {
     case 's':  sample_count = atoi(optarg); break;
-    case 'h':
-	cerr << endl << usage_string << endl; exit(0); break;
     }
 }
 
@@ -150,6 +155,7 @@ void report(MxStdModel *m0, MxStdModel *m1)
 
 int main(int argc, char *argv[])
 {
+    set_usage_string(usage_string);
     process_cmdline_only(argc, argv, options, process_options);
 
 

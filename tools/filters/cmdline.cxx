@@ -20,9 +20,23 @@
 
 #include "cmdline.h"
 
-static const char *base_options="o:";
+static const char *base_options="o:h";
 
 static char *output_filename = NULL;
+static const char *custom_usage = NULL;
+
+static const char *base_usage =
+"Usage: [options] [input files]\n"
+"\n"
+"Options:\n"
+"  -o <file>   Specify output filename\n"
+"  -h          Display this help message\n"
+"\n";
+
+void set_usage_string(const char *usage)
+{
+    custom_usage = usage;
+}
 
 MxStdModel *read_model_from_file(const char *filename,
 				 MxSMFReader *smf,
@@ -76,6 +90,13 @@ void process_cmdline_only(int argc, char *argv[],
 	{
 	case 'o':
 	    output_filename = optarg;
+	    break;
+	case 'h':
+	    if( custom_usage )
+		cerr << endl << custom_usage << endl;
+	    else
+		cerr << endl << base_usage << endl;
+	    exit(0);
 	    break;
 
 	default:

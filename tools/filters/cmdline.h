@@ -32,6 +32,7 @@ extern MxStdModel *read_model_from_file(const char *filename,
 					MxStdModel *m=NULL);
 
 extern void output_final_model(MxStdModel *, bool was_modified=false);
+extern void set_usage_string(const char *usage);
 
 // CMDLINE_INCLUDED
 #endif
