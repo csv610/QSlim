@@ -19,7 +19,7 @@
 
 #include "qslim.h"
 
-static const char *options = "O:B:W:t:Fo:m:c:rjI:M:qh";
+static const char *options = "O:B:W:t:Fo:m:c:rjI:qh";
 
 static const char *usage_string =
 "-O <n>         Optimal placement policy:\n"
@@ -34,8 +34,6 @@ static const char *usage_string =
 "-m <penalty>   Set the penalty for bad meshes.\n"
 "-c <ratio>     Set the desired compactness ratio.\n"
 "-r             Enable history recording.\n"
-"-M <format>    Select output format:\n"
-"                       {smf, iv, vrml, pm, mmf, log}\n"
 "-q		Be quiet.\n"
 "-j             Join only; do not remove any faces.\n"
 "-h             Print help.\n"
@@ -86,11 +84,6 @@ void process_cmdline(int argc, char **argv)
 	    else weighting_policy = ival;
 	    break;
 
-	case 'M':
-	    if( !select_output_format(optarg) )
-		usage_error("Unknown output format selected.");
-	    break;
-
 	case 'B':  boundary_weight = atof(optarg); break;
 	case 't':  face_target = atoi(optarg); break;
 	case 'F':  will_use_fslim = true; break;
@@ -106,6 +99,8 @@ void process_cmdline(int argc, char **argv)
 	default:   usage_error("Malformed command line."); break;
 	}
     }
+
+    infer_output_format();
 
     smf->unparsed_hook = unparsed_hook;
     m = new MxStdModel(100, 100);

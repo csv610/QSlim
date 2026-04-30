@@ -29,3 +29,7 @@ add_test(NAME qslim_integration_test
 add_test(NAME qslim_primitives_test 
          COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test_primitives.py 
          --qslim $<TARGET_FILE:qslim>)
+
+add_test(NAME qslim_formats_test 
+         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test_output_formats.py 
+         $<TARGET_FILE:qslim>)

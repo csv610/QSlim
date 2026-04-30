@@ -27,7 +27,7 @@ double compactness_ratio = 0.0;
 double meshing_penalty = 1.0;
 bool will_join_only = false;
 bool be_quiet = false;
-OutputFormat output_format = SMF;
+OutputFormat output_format = OFF;
 char *output_filename = NULL;
 
 // Globally visible variables
@@ -135,6 +135,41 @@ void slim_cleanup()
     	CLEANUP(output_stream);
 }
 
+static bool strend(const char *s, const char *suffix)
+{
+    size_t slen = strlen(s);
+    size_t suffixlen = strlen(suffix);
+    if (suffixlen > slen) return false;
+    
+    const char *p = s + slen - suffixlen;
+    while (*p) {
+        if (tolower(*p) != tolower(*suffix)) return false;
+        p++; suffix++;
+    }
+    return true;
+}
+
+void infer_output_format()
+{
+    if( !output_filename ) return;
+
+    if      ( strend(output_filename, ".mmf") ) { output_format = MMF; will_record_history = true; }
+    else if ( strend(output_filename, ".pm")  ) { output_format = PM;  will_record_history = true; }
+    else if ( strend(output_filename, ".log") ) { output_format = LOG; will_record_history = true; }
+    else if ( strend(output_filename, ".smf") ) output_format = SMF;
+    else if ( strend(output_filename, ".iv")  ) output_format = IV;
+    else if ( strend(output_filename, ".vrml")) output_format = VRML;
+    else if ( strend(output_filename, ".obj") ) output_format = OBJ;
+    else if ( strend(output_filename, ".off") ) output_format = OFF;
+    else if ( strend(output_filename, ".ply") ) output_format = PLY;
+}
+
+void output_preamble()
+{
+    if( output_format==MMF || output_format==LOG )
+	output_current_model();
+}
+
 static
 void setup_output()
 {
@@ -145,29 +180,6 @@ void setup_output()
 	else
 	    output_stream = &cout;
     }
-}
-
-bool select_output_format(const char *fmt)
-{
-    bool h = false;
-
-    if     ( streq(fmt, "mmf") ) { output_format = MMF; h = true; }
-    else if( streq(fmt, "pm")  ) { output_format = PM;  h = true; }
-    else if( streq(fmt, "log") ) { output_format = LOG; h = true; }
-    else if( streq(fmt, "smf") ) output_format = SMF;
-    else if( streq(fmt, "iv")  ) output_format = IV;
-    else if( streq(fmt, "vrml")) output_format = VRML;
-    else return false;
-
-    if( h ) will_record_history = true;
-
-    return true;
-}
-
-void output_preamble()
-{
-    if( output_format==MMF || output_format==LOG )
-	output_current_model();
 }
 
 void output_current_model()
@@ -223,23 +235,24 @@ void output_final_model()
 	cleanup_for_output();
 	output_current_model();
 	break;
+
+    case OBJ:
+	cleanup_for_output();
+	output_obj(*output_stream);
+	break;
+
+    case OFF:
+	cleanup_for_output();
+	output_off(*output_stream);
+	break;
+
+    case PLY:
+	cleanup_for_output();
+	output_ply(*output_stream);
+	break;
     }
 
 
-}
-
-static bool strend(const char *s, const char *suffix)
-{
-    size_t slen = strlen(s);
-    size_t suffixlen = strlen(suffix);
-    if (suffixlen > slen) return false;
-    
-    const char *p = s + slen - suffixlen;
-    while (*p) {
-        if (tolower(*p) != tolower(*suffix)) return false;
-        p++; suffix++;
-    }
-    return true;
 }
 
 void input_file(const char *filename)

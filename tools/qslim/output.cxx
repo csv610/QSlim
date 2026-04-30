@@ -50,6 +50,63 @@ void output_ivrml(ostream& out, bool vrml=false)
 void output_iv(ostream& out) { output_ivrml(out, false); }
 void output_vrml(ostream& out) { output_ivrml(out, true); }
 
+void output_obj(ostream& out)
+{
+    uint i;
+    for(i=0; i<m->vert_count(); i++)
+        if( m->vertex_is_valid(i) )
+            out << "v " << m->vertex(i)[0] << " "
+                << m->vertex(i)[1] << " "
+                << m->vertex(i)[2] << endl;
+
+    for(i=0; i<m->face_count(); i++)
+        if( m->face_is_valid(i) )
+            out << "f " << m->face(i)[0]+1 << " "
+                << m->face(i)[1]+1 << " "
+                << m->face(i)[2]+1 << endl;
+}
+
+void output_off(ostream& out)
+{
+    out << "OFF" << endl;
+    out << m->vert_count() << " " << m->face_count() << " 0" << endl;
+
+    uint i;
+    for(i=0; i<m->vert_count(); i++)
+        out << m->vertex(i)[0] << " "
+            << m->vertex(i)[1] << " "
+            << m->vertex(i)[2] << endl;
+
+    for(i=0; i<m->face_count(); i++)
+        out << "3 " << m->face(i)[0] << " "
+            << m->face(i)[1] << " "
+            << m->face(i)[2] << endl;
+}
+
+void output_ply(ostream& out)
+{
+    out << "ply" << endl;
+    out << "format ascii 1.0" << endl;
+    out << "element vertex " << m->vert_count() << endl;
+    out << "property float x" << endl;
+    out << "property float y" << endl;
+    out << "property float z" << endl;
+    out << "element face " << m->face_count() << endl;
+    out << "property list uchar int vertex_indices" << endl;
+    out << "end_header" << endl;
+
+    uint i;
+    for(i=0; i<m->vert_count(); i++)
+        out << m->vertex(i)[0] << " "
+            << m->vertex(i)[1] << " "
+            << m->vertex(i)[2] << endl;
+
+    for(i=0; i<m->face_count(); i++)
+        out << "3 " << m->face(i)[0] << " "
+            << m->face(i)[1] << " "
+            << m->face(i)[2] << endl;
+}
+
 void output_regressive_mmf(ostream& out)
 {
     if( !history ) return;

@@ -22,7 +22,7 @@
 
 typedef MxDynBlock<MxPairContraction> QSlimLog;
 
-enum OutputFormat { SMF, PM, MMF, LOG, IV, VRML };
+enum OutputFormat { SMF, PM, MMF, LOG, IV, VRML, OBJ, OFF, PLY };
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -69,13 +69,16 @@ extern void slim_history_callback(const MxPairContraction&,float);
 //
 // Output routines
 //
-extern bool select_output_format(const char *);
+extern void infer_output_format();
 extern void output_preamble();
 extern void output_current_model();
 extern void output_final_model();
 
 extern void output_iv(ostream&);
 extern void output_vrml(ostream&);
+extern void output_obj(ostream&);
+extern void output_off(ostream&);
+extern void output_ply(ostream&);
 extern void output_regressive_mmf(ostream&);
 extern void output_regressive_log(ostream&);
 extern void output_progressive_pm(ostream&);
