@@ -22,11 +22,13 @@ This version is a "clean-room" modernization of the original 1999 codebase. It s
     *   `get_removal_order()`: Returns the exact sequence of vertices removed during decimation.
     *   `get_protected_vertices()`: Automatically identifies critical boundary and non-manifold vertices that should be preserved.
 *   **Modern Build System:** Replaced fragile legacy Makefiles with a robust **CMake** configuration.
-*   **Multi-Format Support:** Added native support for modern 3D formats:
+*   **Multi-Format Support:** Added native support for modern 3D formats for both input and output:
+    *   **OFF** (Object File Format) - **Now the default output format**
     *   **OBJ** (Alias Wavefront)
-    *   **OFF** (Object File Format)
-    *   **STL** (Binary Stereolithography)
+    *   **PLY** (Polygon File Format)
+    *   **STL** (Binary Stereolithography - Input only)
     *   **SMF** (Original Michael Garland format)
+*   **Smart Output Inference:** No need for format flags. The tool automatically detects the desired output format based on your filename extension (e.g., `-o model.ply`).
 *   **100% Warning-Free:** The codebase now compiles with zero warnings under strict modern standards.
 *   **Automated Verification:** Integrated `ctest` suite ensuring mathematical correctness across all file formats.
 
@@ -86,20 +88,24 @@ ctest
 The core tool is the `qslim` command-line utility.
 
 ### Basic Simplification
-Simplify a model to a target number of faces (e.g., 5,000 faces):
+Simplify a model to a target number of faces (e.g., 5,000 faces). The output format is automatically inferred from the extension:
 ```bash
-./tools/qslim/qslim -t 5000 -o output.obj input.obj
+./tools/qslim/qslim -t 5000 -o output.obj input.smf
+./tools/qslim/qslim -t 1000 -o output.ply input.obj
 ```
+
+If no output filename is provided, it defaults to **OFF** format on stdout.
 
 ### Key Options
 | Flag | Description |
 | :--- | :--- |
 | `-t <n>` | Set the target number of faces. |
-| `-o <file>` | Specify output filename (supports .obj, .smf). |
+| `-o <file>` | Specify output filename (supports .off, .obj, .ply, .smf, .iv, .vrml). |
 | `-O <0-3>` | Optimal placement policy (3 = Default Optimal). |
 | `-W <0-2>` | Quadric weighting (1 = Area Weighted [Default]). |
 | `-B <weight>` | Use boundary preservation planes (important for open meshes). |
 | `-q` | Quiet mode (minimal console output). |
+| `-r` | Enable history recording (required for .pm, .mmf, and .log outputs). |
 
 ---
 
