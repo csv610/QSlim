@@ -121,7 +121,7 @@ inline istream& operator>>(istream& in, MxQuadric3& Q) { return Q.read(in); }
 #define MX_CHARCOAL_ELLIPSOIDS 0x3
 
 extern void mx_quadric_shading(int c=MX_GREEN_ELLIPSOIDS, bool twosided=true);
-extern void mx_draw_quadric(const MxQuadric3& Q, double r, const float*v=NULL);
+extern void mx_draw_quadric(const MxQuadric3& Q, double r, const float*v=nullptr);
 extern void mx_draw_osculant(float k1, float k2, float extent=1.0);
 
 // MXQMETRIC3_INCLUDED

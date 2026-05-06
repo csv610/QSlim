@@ -81,9 +81,9 @@ public:
 
     MxAspStore *asp_store() { return this->MxCmdParser::asp_store(); }
 
-    MxStdModel *read(istream& in, MxStdModel *model=NULL);
+    MxStdModel *read(istream& in, MxStdModel *model=nullptr);
 #ifndef MIX_ANSI_IOSTREAMS
-    MxStdModel *read(int fd, MxStdModel *model=NULL);
+    MxStdModel *read(int fd, MxStdModel *model=nullptr);
 #endif
     void parse_line(char *, MxStdModel&);
 };

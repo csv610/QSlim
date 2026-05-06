@@ -20,16 +20,16 @@
 typedef void (*option_processor)(int, char *optarg);
 
 extern MxStdModel *process_cmdline(int argc, char *argv[],
-				   const char *options=NULL,
-				   option_processor proc=NULL);
+				   const char *options=nullptr,
+				   option_processor proc=nullptr);
 
 extern void process_cmdline_only(int argc, char *argv[],
-				 const char *options=NULL,
-				 option_processor proc=NULL);
+				 const char *options=nullptr,
+				 option_processor proc=nullptr);
 
 extern MxStdModel *read_model_from_file(const char *filename,
-					MxSMFReader *smf=NULL,
-					MxStdModel *m=NULL);
+					MxSMFReader *smf=nullptr,
+					MxStdModel *m=nullptr);
 
 extern void output_final_model(MxStdModel *, bool was_modified=false);
 extern void set_usage_string(const char *usage);

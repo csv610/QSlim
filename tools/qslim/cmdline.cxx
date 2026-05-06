@@ -52,7 +52,7 @@ static void print_usage()
          << usage_string << endl;
 }
 
-static void usage_error(const char *msg=NULL)
+static void usage_error(const char *msg=nullptr)
 {
     if( msg )  cerr << "Error: " << msg << endl;
     print_usage();

@@ -28,24 +28,22 @@ double meshing_penalty = 1.0;
 bool will_join_only = false;
 bool be_quiet = false;
 OutputFormat output_format = OFF;
-char *output_filename = NULL;
+char *output_filename = nullptr;
 
-// Globally visible variables
-//
-MxSMFReader *smf = NULL;
-MxStdModel *m = NULL;
-MxQSlim *slim = NULL;
-MxEdgeQSlim *eslim = NULL;
-MxFaceQSlim *fslim = NULL;
-QSlimLog *history = NULL;
-MxDynBlock<MxEdge> *target_edges = NULL;
+MxSMFReader *smf = nullptr;
+MxStdModel *m = nullptr;
+MxQSlim *slim = nullptr;
+MxEdgeQSlim *eslim = nullptr;
+MxFaceQSlim *fslim = nullptr;
+QSlimLog *history = nullptr;
+MxDynBlock<MxEdge> *target_edges = nullptr;
 
 const char *slim_copyright_notice =
 "Copyright (C) 1998 Michael Garland.  See \"COPYING.txt\" for details.";
 
 const char *slim_version_string = "2.0";
 
-static ostream *output_stream = NULL;
+static ostream *output_stream = nullptr;
 
 static
 bool qslim_smf_hook(char *op, int, char *argv[], MxStdModel& m)
@@ -120,15 +118,15 @@ void slim_init()
     }
 }
 
-#define CLEANUP(x)  if(x) { delete x; x=NULL; }
+#define CLEANUP(x)  if(x) { delete x; x=nullptr; }
 
 void slim_cleanup()
 {
     CLEANUP(smf);
     CLEANUP(m);
     CLEANUP(slim);
-    eslim = NULL;
-    fslim = NULL;
+    eslim = nullptr;
+    fslim = nullptr;
     CLEANUP(history);
     CLEANUP(target_edges);
     if( output_stream != &cout )

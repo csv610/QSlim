@@ -51,7 +51,7 @@ MxSMFReader::MxSMFReader()
     quad_count=0;
     poly_count=0;
     line_buffer = new char[SMF_MAXLINE];
-    unparsed_hook = NULL;
+    unparsed_hook = nullptr;
 
     define_avars();
 }
@@ -353,8 +353,8 @@ MxStdModel *MxSMFReader::read(int fd, MxStdModel *m)
 
 MxSMFWriter::MxSMFWriter()
 {
-    vertex_annotate = NULL;
-    face_annotate = NULL;
+    vertex_annotate = nullptr;
+    face_annotate = nullptr;
 }
 
 void MxSMFWriter::write(ostream& out, MxStdModel& m)

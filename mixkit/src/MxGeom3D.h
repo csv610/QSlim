@@ -26,7 +26,7 @@ extern double triangle_compactness(const Vec3&, const Vec3&, const Vec3&);
 
 extern double triangle_project_point(const Vec3& v0, const Vec3& v1,
 				     const Vec3& v2, const Vec3& v,
-				     Vec3 *bary=NULL);
+				     Vec3 *bary=nullptr);
 
 extern void mx3d_box_corners(const Vec3& min, const Vec3& max, Vec3 *v);
 

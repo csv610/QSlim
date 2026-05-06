@@ -20,7 +20,7 @@ MxQSlim::MxQSlim(MxStdModel& _m)
       quadrics(_m.vert_count())
 {
     // Externally visible variables
-    object_transform = NULL;
+    object_transform = nullptr;
 }
 
 void MxQSlim::initialize()
@@ -140,7 +140,7 @@ MxEdgeQSlim::MxEdgeQSlim(MxStdModel& _m)
   : MxQSlim(_m),
     edge_links(_m.vert_count())
 {
-    contraction_callback = NULL;
+    contraction_callback = nullptr;
 }
 
 MxEdgeQSlim::~MxEdgeQSlim()

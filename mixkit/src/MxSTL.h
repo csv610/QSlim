@@ -8,7 +8,7 @@ class MxSTLReader
 {
 public:
     MxSTLReader() {}
-    MxStdModel *read(std::istream& in, MxStdModel *model = NULL);
+    MxStdModel *read(std::istream& in, MxStdModel *model = nullptr);
 };
 
 #endif

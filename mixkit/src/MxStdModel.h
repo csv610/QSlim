@@ -179,7 +179,7 @@ public:
     void flip_edge(MxVertexID v1, MxVertexID v2);
 
     // split_face3
-    void split_face4(MxFaceID f, MxVertexID *newverts=NULL);
+    void split_face4(MxFaceID f, MxVertexID *newverts=nullptr);
 
     void unlink_face(MxFaceID f);
 
@@ -191,7 +191,7 @@ public:
 
     // Pair contraction interface
     void compute_contraction(MxVertexID, MxVertexID,
-			     MxPairContraction *, const float *vnew=NULL);
+			     MxPairContraction *, const float *vnew=nullptr);
     void apply_contraction(const MxPairContraction&);
     void apply_expansion(const MxPairExpansion&);
     void contract(MxVertexID v1, MxVertexID v2,
@@ -209,8 +209,8 @@ public:
 
 
 extern void mx_render_model(MxStdModel&);
-extern void mx_draw_mesh(MxStdModel&, double *color=NULL);
-extern void mx_draw_wireframe(MxStdModel&, double *color=NULL);
+extern void mx_draw_mesh(MxStdModel&, double *color=nullptr);
+extern void mx_draw_wireframe(MxStdModel&, double *color=nullptr);
 extern void mx_draw_boundaries(MxStdModel&);
 extern void mx_draw_pointcloud(MxStdModel&);
 

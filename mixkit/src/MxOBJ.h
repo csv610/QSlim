@@ -8,7 +8,7 @@ class MxOBJReader
 {
 public:
     MxOBJReader() {}
-    MxStdModel *read(std::istream& in, MxStdModel *model = NULL);
+    MxStdModel *read(std::istream& in, MxStdModel *model = nullptr);
 };
 
 #endif

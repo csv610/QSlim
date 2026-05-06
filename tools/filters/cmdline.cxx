@@ -22,8 +22,8 @@
 
 static const char *base_options="o:h";
 
-static char *output_filename = NULL;
-static const char *custom_usage = NULL;
+static char *output_filename = nullptr;
+static const char *custom_usage = nullptr;
 
 static const char *base_usage =
 "Usage: [options] [input files]\n"
@@ -68,7 +68,7 @@ void process_cmdline_only(int argc, char *argv[],
 			    const char *user_options, option_processor proc)
 {
     const char *options = base_options;
-    char *dyn_options = NULL;
+    char *dyn_options = nullptr;
 
     if( user_options )
     {

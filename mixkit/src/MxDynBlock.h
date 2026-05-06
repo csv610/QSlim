@@ -56,7 +56,7 @@ public:
             for(uint i=0; i<d && !this->data.empty(); i++) 
                 this->data.pop_back(); 
         }
-    bool find(const T& t, uint *index=NULL)
+    bool find(const T& t, uint *index=nullptr)
 	{
 	    for(uint i=0; i<length(); i++)
 		if( this->data[i] == t )

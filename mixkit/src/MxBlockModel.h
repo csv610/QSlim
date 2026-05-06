@@ -63,11 +63,11 @@ public:
 public:
     MxBlockModel(int nvert, int nface) : vertices(nvert), faces(nface)
 	{
-	    colors = NULL;  normals = NULL;  tcoords = NULL;
+	    colors = nullptr;  normals = nullptr;  tcoords = nullptr;
 	    cbinding = nbinding = tbinding = MX_UNBOUND;
 	    binding_mask = MX_ALL_MASK;
-	    tex = NULL;
-	    tex_name = NULL;
+	    tex = nullptr;
+	    tex_name = nullptr;
 	}
     virtual ~MxBlockModel()
 	{
@@ -126,7 +126,7 @@ public:
     void compute_face_normal(MxFaceID, double *, bool will_unitize=true);
     void compute_face_normal(MxFaceID, float *, bool will_unitize=true);
     double compute_face_area(MxFaceID);
-    double compute_face_perimeter(MxFaceID, bool *edge_flags=NULL);
+    double compute_face_perimeter(MxFaceID, bool *edge_flags=nullptr);
 
     double compute_corner_angle(MxFaceID, uint);
 };

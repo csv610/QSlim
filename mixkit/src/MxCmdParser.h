@@ -25,7 +25,7 @@ public:
     char *op;
     MxDynBlock<MxCmdPhrase> phrases;
 
-    MxCmd(int N) : phrases(N) { op=NULL; }
+    MxCmd(int N) : phrases(N) { op=nullptr; }
 };
 
 class MxCmdParser
@@ -42,9 +42,9 @@ public:
 
     MxAspStore *asp_store() { return &store; }
 
-    void parse_line(char *, void *closure=NULL);
+    void parse_line(char *, void *closure=nullptr);
 
-    virtual bool execute_command(const MxCmd& cmd, void *closure=NULL);
+    virtual bool execute_command(const MxCmd& cmd, void *closure=nullptr);
 };
 
 // MXCMDPARSER_INCLUDED
