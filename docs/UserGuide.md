@@ -47,7 +47,7 @@ QSlim primarily simplifies meshes using **edge contraction** (notated as $(v_1, 
 QSlim uses the **CMake** build system, making it compatible with Windows, macOS, and Linux.
 
 ### Prerequisites
-- A C++17 compatible compiler (GCC 9+, Clang 10+, MSVC 2019+)
+- A C++20 compatible compiler (GCC 11+, Clang 14+, MSVC 2022+)
 - CMake 3.10 or higher
 
 ### Building from Source

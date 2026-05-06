@@ -1,6 +1,6 @@
 # QSlim 2.0 (Modernized)
 
-[![C++ Standard](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17)
+[![C++ Standard](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![Build Status](https://img.shields.io/badge/Build-CMake-success.svg)](#building)
 
@@ -13,7 +13,7 @@ This version is a "clean-room" modernization of the original 1999 codebase. It s
 ## 🚀 Key Modernization Features
 
 *   **Zero Dependencies:** Completely removed OpenGL, X11, and XForms. It can now be built on any headless server or container without a GPU or display driver.
-*   **C++17 Standard:** Refactored for modern compilers. This includes:
+*   **C++20 Standard:** Refactored for modern compilers. This includes:
     *   **Smart Pointers (RAII):** Replaced manual memory management with `std::unique_ptr` to prevent leaks.
     *   **Type Safety:** Systematically replaced legacy `NULL` with `nullptr` and added `override` keywords.
     *   **Modern Iterators:** Added support for range-based `for` loops (`for (auto& x : block)`) to core data structures.
@@ -45,7 +45,7 @@ The modernized codebase has been stress-tested with high-resolution meshes to en
 | **High-Res Sphere** | 50,000 | 200 | 0.45s | ✅ Pass |
 | **Stress Test Sphere** | **500,000** | **1,000** | **5.3s** | ✅ Pass |
 
-The adoption of **STL-backed containers** and **C++17 optimizations** allows for rapid simplification of large-scale models (up to 99.8% reduction) with minimal memory overhead.
+The adoption of **STL-backed containers** and **C++20 optimizations** allows for rapid simplification of large-scale models (up to 99.8% reduction) with minimal memory overhead.
 
 ---
 
@@ -64,7 +64,7 @@ While the original software was a research prototype, this modernized version ma
 
 ### Prerequisites
 *   CMake 3.10 or higher
-*   A C++17 compatible compiler (GCC 9+, Clang 10+, MSVC 2019+)
+*   A C++20 compatible compiler (GCC 11+, Clang 14+, MSVC 2022+)
 
 ### Compilation
 ```bash
